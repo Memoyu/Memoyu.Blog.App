@@ -1,0 +1,53 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
+
+Vue.use(VueRouter)
+
+const routes = [
+  {
+    path: '',
+    name: 'Home',
+    component: Home,
+    children: [
+      {
+        path: '/',
+        component: r =>
+          require.ensure([], () => r(require('@/views/Index')), 'index')
+      },
+      {
+        path: '/posts',
+        component: r =>
+          require.ensure([], () => r(require('@/views/blog/Posts')), 'posts')
+      },
+      {
+        path: '/post/:year?/:month?/:day?/:name?',
+        component: r =>
+          require.ensure([], () => r(require('@/views/blog/Post')), 'post')
+      },
+      {
+        path: '/categories',
+        component: r =>
+          require.ensure([], () => r(require('@/views/blog/Categories')), 'categories')
+      },
+      {
+        path: '/tags',
+        component: r =>
+          require.ensure([], () => r(require('@/views/blog/Tags')), 'tags')
+      },
+      {
+        path: '/other',
+        component: r =>
+          require.ensure([], () => r(require('@/views/blog/Other')), 'other')
+      }
+    ]
+  }
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router
