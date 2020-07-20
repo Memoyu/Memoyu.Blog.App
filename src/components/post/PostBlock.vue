@@ -1,9 +1,13 @@
 <template>
   <div>
-    <v-card-title >
+    <v-card-title>
       <span class="headline font-weight-bold">{{year}}</span>
     </v-card-title>
-    <post-item v-for="a in posts" :key="a.url" v-bind="a"></post-item>
+    <post-item
+      v-for="a in posts"
+      :key="a.url"
+      v-bind="a"
+    ></post-item>
   </div>
 </template>
 
@@ -15,7 +19,7 @@ export default {
     year: Number,
     posts: Array
   },
-  data() {
+  data () {
     return {}
   },
   methods: {},
@@ -26,7 +30,7 @@ export default {
 </script>
 
 <style scoped>
-.v-card__title{
-    padding: 0px;
+.v-card__title {
+  padding: 0px 30px;
 }
 </style>

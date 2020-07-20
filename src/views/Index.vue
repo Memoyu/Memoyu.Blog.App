@@ -1,8 +1,12 @@
 <template>
-  <v-container class="v-container">
+  <v-container
+    class="v-container"
+    v-title
+    data-title="MemoyuBlog"
+  >
     <div class="intro">
       <div class="avatar">
-        <a href="javascript:;"><img src="@/assets/images/index/avatar.jpg"/></a>
+        <a href="javascript:;"><img src="@/assets/images/index/avatar.jpg" /></a>
       </div>
       <div class="nickname">Memoyu</div>
       <div class="font-weight-medium">
@@ -12,7 +16,12 @@
         </p>
       </div>
       <div class="links">
-        <v-btn icon color="black" large title="GitHub">
+        <v-btn
+          icon
+          color="black"
+          large
+          title="GitHub"
+        >
           <v-icon large>mdi-github</v-icon>
         </v-btn>
         <v-btn
@@ -27,7 +36,10 @@
         </v-btn>
       </div>
       <div class="qrcode">
-        <img v-show="isHiddenQr" src="@/assets/images/index/wx_qrcode.png" />
+        <img
+          v-show="isHiddenQr"
+          src="@/assets/images/index/wx_qrcode.png"
+        />
       </div>
     </div>
   </v-container>
@@ -37,20 +49,20 @@
 import { mapMutations } from 'vuex'
 export default {
   name: 'Index',
-  created() {
+  created () {
     this.showSnackbar('欢迎来到Memoyu的博客')
   },
-  data() {
+  data () {
     return {
       isHiddenQr: false
     }
   },
   methods: {
     ...mapMutations(['showSnackbar']),
-    onMouseOver() {
+    onMouseOver () {
       this.isHiddenQr = true
     },
-    onMouseLeave() {
+    onMouseLeave () {
       this.isHiddenQr = false
     }
   }
