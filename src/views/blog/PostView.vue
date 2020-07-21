@@ -13,7 +13,7 @@ import MarkdownEditor from '@/components/markdown/MarkdownEditor'
 import { getPostDetail } from '@/api/post'
 
 export default {
-  name: 'Post',
+  name: 'PostView',
   created () {
     this.getPostDetail()
   },

@@ -2,8 +2,8 @@
   <v-container>
     <v-main>
       <post-scroll-page
-        url="api/blog/posts"
-        :page="this.innerPage"
+        url="api/blog/posts/tag"
+        :page=this.innerPage
       ></post-scroll-page>
     </v-main>
   </v-container>
@@ -12,16 +12,19 @@
 <script>
 import PostScrollPage from '@/components/post/PostScrollPage'
 export default {
-  name: 'Posts',
+  name: 'PostsForTag',
+  created () {
+    // const id = this.$route.params.id
+  },
   data () {
     return {
       innerPage: {
+        id: this.$route.params.id,
         page: 1,
         limit: 6
       }
     }
   },
-  created () { },
   methods: {},
   components: {
     'post-scroll-page': PostScrollPage

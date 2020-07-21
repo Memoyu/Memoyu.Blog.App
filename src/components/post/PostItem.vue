@@ -1,5 +1,12 @@
 <template>
-  <v-card class="me-post" @mouseover="onMouseOver" @mouseleave="onMouseLeave" max-width="700" light :elevation="elevation">
+  <v-card
+    class="me-post"
+    @mouseover="onMouseOver"
+    @mouseleave="onMouseLeave"
+    max-width="700"
+    light
+    :elevation="elevation"
+  >
     <v-card-title @click="view(url)">
       <a class="headline font-weight-bold">{{title}}</a>
     </v-card-title>
@@ -20,7 +27,10 @@
           <v-list-item-title>Memoyu</v-list-item-title>
         </v-list-item-content>
 
-        <v-row align="center" justify="end">
+        <v-row
+          align="center"
+          justify="end"
+        >
           <v-icon class="mr-1">mdi-clock</v-icon>
           <span class="subheading mr-2">{{creationTime}}</span>
         </v-row>
@@ -39,19 +49,19 @@ export default {
     year: Number,
     creationTime: String
   },
-  data() {
+  data () {
     return {
       elevation: 0
     }
   },
   methods: {
-    view(url) {
+    view (url) {
       this.$router.push({ path: `/post${url}` })
     },
-    onMouseOver() {
+    onMouseOver () {
       this.elevation = 3
     },
-    onMouseLeave() {
+    onMouseLeave () {
       this.elevation = 0
     }
   }

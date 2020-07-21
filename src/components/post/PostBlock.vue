@@ -4,9 +4,9 @@
       <span class="headline font-weight-bold">{{year}}</span>
     </v-card-title>
     <post-item
-      v-for="a in posts"
-      :key="a.url"
-      v-bind="a"
+      v-for="p in posts"
+      :key="p.url"
+      v-bind="p"
     ></post-item>
   </div>
 </template>

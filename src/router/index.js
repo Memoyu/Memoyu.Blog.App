@@ -21,19 +21,45 @@ const routes = [
           require.ensure([], () => r(require('@/views/blog/Posts')), 'posts')
       },
       {
-        path: '/post/:year?/:month?/:day?/:name?',
+        path: '/postView/:year?/:month?/:day?/:name?',
         component: r =>
-          require.ensure([], () => r(require('@/views/blog/Post')), 'post')
+          require.ensure(
+            [],
+            () => r(require('@/views/blog/PostView')),
+            'PostView'
+          )
       },
       {
         path: '/categories',
         component: r =>
-          require.ensure([], () => r(require('@/views/blog/Categories')), 'categories')
+          require.ensure(
+            [],
+            () => r(require('@/views/blog/Categories')),
+            'categories'
+          )
+      },
+      {
+        path: '/posts/category/:id',
+        component: r =>
+          require.ensure(
+            [],
+            () => r(require('@/views/blog/PostsForCategory')),
+            'PostsForCategory'
+          )
       },
       {
         path: '/tags',
         component: r =>
           require.ensure([], () => r(require('@/views/blog/Tags')), 'tags')
+      },
+      {
+        path: '/posts/tag/:id',
+        component: r =>
+          require.ensure(
+            [],
+            () => r(require('@/views/blog/PostsForTag')),
+            'PostsForTag'
+          )
       },
       {
         path: '/other',

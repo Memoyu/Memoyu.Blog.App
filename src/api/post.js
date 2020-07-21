@@ -1,13 +1,10 @@
 import request from './api'
 
-export function getPosts(page) {
+export function getPosts(url, page) {
   return request({
-    url: 'api/blog/posts',
+    url: url,
     method: 'get',
-    params: {
-      Page: page.page,
-      Limit: page.limit
-    }
+    params: page
   })
 }
 export function getPostDetail(url) {

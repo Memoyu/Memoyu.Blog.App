@@ -5,13 +5,19 @@
     :no-data="noData"
     v-on:load="load"
   >
-    <post-block v-for="a in postItems" :key="a.year" v-bind="a"></post-block>
+    <post-block
+      v-for="p in postItems"
+      :key="p.year"
+      v-bind="p"
+    ></post-block>
   </scroll-page>
 </template>
 
 <script>
 import PostBlock from '@/components/post/PostBlock'
 import ScrollPage from '@/components/common/ScrollPage'
+import { GET_POST_LIST } from '@/store/action-types'
+import { mapState, mapActions } from 'vuex'
 import { getPosts } from '@/api/post'
 
 export default {
@@ -21,82 +27,87 @@ export default {
       type: Number,
       default: 100
     },
+    url: String,
     page: {
       type: Object,
-      default() {
+      default () {
         return {}
       }
     },
     query: {
       type: Object,
-      default() {
+      default () {
         return {}
       }
     }
   },
   watch: {
-    query: {
-      handler() {
-        this.noData = false
-        this.postItems = []
-        this.innerPage.page = 1
-        this.getPostList()
-      },
-      deep: true
-    },
-    page: {
-      handler() {
-        this.noData = false
-        this.articles = []
-        this.postItems = this.page
-        this.getPostList()
-      },
-      deep: true
-    }
+    // query: {
+    //   handler () {
+    //     this.noData = false
+    //     this.postItems = []
+    //     this.innerPage.page = 1
+    //     this.getPostList()
+    //   },
+    //   deep: true
+    // },
+    // page: {
+    //   handler () {
+    //     debugger
+    //     this.noData = false
+    //     this.postItems = []
+    //     this.innerPage = this.page
+    //     this.getPostList()
+    //   },
+    //   deep: true
+    // }
   },
-  created() {
+  created () {
     this.getPostList()
   },
-  data() {
+  data () {
     return {
       loading: false,
       noData: false,
-      innerPage: {
-        page: 1,
-        limit: 6
-      },
+      innerPage: this.page,
       postItems: []
     }
   },
+  computed: {
+    ...mapState(['postList'])
+  },
   methods: {
-    load() {
+    ...mapActions({ getPostListData: GET_POST_LIST }),
+    load () {
       this.getPostList()
     },
-    getPostList() {
+    getPostList () {
       const that = this
       that.loading = true
-      getPosts(this.innerPage)
-        .then(data => {
-          // that.postItems = data.result.item
-          const newPosts = data.result.item
-          if (newPosts && newPosts.length > 0) {
-            that.innerPage.page += 1
-            newPosts.map(function(item, index, ary) {
-              var inde = that.postItems.findIndex(function(value, index, arr) {
-                return value.year === item.year
-              })
-              // debugger
-              if (inde > -1) {
-                that.postItems[inde].posts.push(item.posts)
-              } else {
-                that.postItems.push(item)
-              }
+      // 获取文章列表分页数据
+      getPosts(that.url, that.innerPage).then(data => {
+        const newPosts = data.result.item
+        if (newPosts && newPosts.length > 0) {
+          that.innerPage.page += 1
+          newPosts.map(function(item, index, ary) {
+            var inde = that.postItems.findIndex(function(
+              value,
+              index,
+              arr
+            ) {
+              return value.year === item.year
             })
-            // that.postItems = that.postItems.concat(newPosts)
-          } else {
-            that.noData = true
-          }
-        })
+            if (inde > -1) {
+              that.postItems[inde].posts.push(item.posts)
+            } else {
+              that.postItems.push(item)
+            }
+          })
+          // that.postItems = that.postItems.concat(newPosts)
+        } else {
+          that.noData = true
+        }
+      })
         .catch(error => {
           if (error !== 'error') {
             that.$store.commit('showSnackbar', '文章列表加载失败!')
